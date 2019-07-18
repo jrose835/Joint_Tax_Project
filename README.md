@@ -1,6 +1,6 @@
-#Joint vs Single Tax Filing Visualization
+# Joint vs Single Tax Filing Visualization
 
-###Summary
+### Summary
 
 I recently got married! I'm also trying to brush off some of my knowledge of the R programming language. Naturally the first thing I thought to do was try and visualize how my new marital status would affect my tax return! I know! It's true! Married life can be **SO** exciting!
 
@@ -10,4 +10,4 @@ The Tax_data.R files are where I perform the simulation and visualize the result
 
 This was just a fun first project to get me back into using R after a long while of dormancy, but happy to hear any suggestions for improvement!
 
-##Description of Files
+## Description of Files
