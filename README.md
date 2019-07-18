@@ -10,4 +10,12 @@ The Tax_data.R files are where I perform the simulation and visualize the result
 
 This was just a fun first project to get me back into using R after a long while of dormancy, but happy to hear any suggestions for improvement!
 
-## Description of Files
+### Results
+
+Check back soon!
+
+### Description of Files
+* US_taxbracket_2019.csv -- A simple table with the 2019 US tax brackets
+* single_tax.R -- R script for calculing single tax filing giving adjusted gross income
+* joint_tax.R -- Same as single but for joint filing
+* Tax_data3.R -- current version of simulation and visualization code
