@@ -1,5 +1,5 @@
-#The goal of this project is to create a heatmap of tax filings for two individuals with varying gross income levels
-#It provides heatmaps for both single filing and married filing status as well as the "marriage bonus"
+#The goal of this project is to create a heatmap of tax filings for two married ndividuals with varying gross income levels
+#It provides heatmaps for both single tax filing and married tax filing status as well as the "marriage bonus"
 #Jrose 23May19
 
 #Clear workspace
@@ -9,37 +9,34 @@ rm(list=ls())
 library(ComplexHeatmap)
 library(circlize)
 library(tidyverse)
+library(RColorBrewer)
 
 #Creating variables for range of incomes
 indv1_low <- 15000
-indv1_high <- 200000
+indv1_high <- 500000
 indv2_low <- 15000
-indv2_high <- 200000
+indv2_high <- 500000
 increment <- 10000
 
 #Create vectors of individual gross income possibilities
 indv1 <- seq(from=indv1_low, to=indv1_high, by=increment)
 indv2 <- seq(from=indv2_low, to=indv2_high, by=increment)
 
-#Adjusted gross income calculation (assumes standard deduction of $12,000 per individual)
-std_deduct <- 12000
-agi_indv1 <- indv1 - std_deduct
-agi_indv2 <- indv2 - std_deduct
 
 #Source functions single_tax.R and joint_tax.R for amount owed in single filing and married joint filings
 source("single_tax.R")
 source("joint_tax.R")
 
 #Apply joint_tax function to create a matrix of joint tax amount totals
-joint_tax_totals <- sapply(1:length(agi_indv2), function(n) 
-  c(sapply((agi_indv1 + agi_indv2[n]), joint_tax))
+joint_tax_totals <- sapply(1:length(indv2), function(n) 
+  c(sapply((indv1 + indv2[n]), joint_tax))
   )
 colnames(joint_tax_totals) <- sprintf("%sK", seq(from=(indv1_low/1000), to=(indv1_high/1000), by=(increment/1000)))
 rownames(joint_tax_totals) <- sprintf("%sK", seq(from=(indv2_low/1000), to=(indv2_high/1000), by=(increment/1000)))
 
 #Apply single_tax function to create matrix of single tax amount totals
-single_tax_totals <- sapply(1:length(agi_indv2), function(n) 
-  c(sapply(agi_indv1, single_tax) + sapply(agi_indv2[n], single_tax))
+single_tax_totals <- sapply(1:length(indv2), function(n) 
+  c(sapply(indv1, single_tax) + sapply(indv2[n], single_tax))
   )
 colnames(single_tax_totals) <- sprintf("%sK", seq(from=(indv1_low/1000), to=(indv1_high/1000), by=(increment/1000)))
 rownames(single_tax_totals) <- sprintf("%sK", seq(from=(indv2_low/1000), to=(indv2_high/1000), by=(increment/1000)))
@@ -47,25 +44,57 @@ rownames(single_tax_totals) <- sprintf("%sK", seq(from=(indv2_low/1000), to=(ind
 #heatmaps of total federal tax
 
 htmp_single <- Heatmap(single_tax_totals, 
-        column_title = "Total Tax--Single Filing",
+        column_title = "Single Filing",
+        row_title = "Individual Earner Income",
+        row_names_gp = gpar(col = 
+                              c(
+                                rep(
+                                  c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                )
+                              )
+        ),
+        column_names_gp = gpar(col = 
+                                 c(
+                                   rep(
+                                     c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                   )
+                                 )
+        ),  
         cluster_columns=FALSE,
         cluster_rows=FALSE,
-        name = "Tax Owed"
+        name = "Single Filing Tax Owed",
+        width = unit(10, "cm"),
+        col= (colorRamp2(c(min(single_tax_totals), median(single_tax_totals), max(single_tax_totals)), brewer.pal(3,"YlGnBu")))
         )
 
 htmp_joint <- Heatmap(joint_tax_totals, 
-        column_title = "Total Tax--Joint Filing",
+        column_title = "Joint Filing",
+        row_title = "Individual Earner Income",
+        row_names_gp = gpar(col = 
+                              c(
+                                rep(
+                                  c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                )
+                              )
+        ),
+        column_names_gp = gpar(col = 
+                                 c(
+                                   rep(
+                                     c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                   )
+                                 )
+        ),  
         cluster_columns=FALSE,
         cluster_rows=FALSE,
-        name = "Tax Owed"
+        name = "Joint Filing Tax Owed",
+        width = unit(10, "cm"),
+        col= (colorRamp2(c(min(joint_tax_totals), median(joint_tax_totals), max(joint_tax_totals)), brewer.pal(3,"YlGnBu")))
         )
-#png(file="htmp_sing.png")
-draw(htmp_single)
-#dev.off()
 
-#png(file="htmp_joint.png")
-draw(htmp_joint)
-#dev.off()
+#Draw and save to png file
+png(file="Total_Tax_Owed.png", width = 900, height = 600)
+draw(htmp_single + htmp_joint, column_title = "Total Tax Owed")
+dev.off()
 
 #Calculate 'marriage bonus/penalty' amounts & plot heatmap
 bonus_penalty <- single_tax_totals - joint_tax_totals
@@ -74,27 +103,27 @@ htmp_bonus <- Heatmap(bonus_penalty,
         cluster_columns=FALSE,
         column_title = "Marriage Tax Bonus: Joint Filing vs Single Filing",
         cluster_rows=FALSE,
-       # row_names_gp = gpar(col = 
-        #                      c(
-         #                       rep(
-          #                        c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5
-           #                     )
-            #                  )
-             #               ),
-        #column_names_gp = gpar(col = 
-         #                      c(
-          #                       rep(
-           #                        c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5
-            #                     )
-             #                  )
-                              #),  
+        row_names_gp = gpar(col = 
+                              c(
+                                rep(
+                                  c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                )
+                              )
+                            ),
+        column_names_gp = gpar(col = 
+                               c(
+                                 rep(
+                                   c("black", rep("white", 3)), (length(indv1)/4)      #Whites out labels bewtween 1 and 5, useful when heatmap is large
+                                 )
+                               )
+                            ),  
         name = "Bonus $",
-        col= c("Red", "yellow", "greenyellow", "green", "cyan", "blue")
+        col= (colorRamp2(c(0, median(bonus_penalty), max(bonus_penalty)), brewer.pal(3,"YlGnBu")))
         )
 
-#png(file="htmp_bonus.png")
+png(file="htmp_bonus.png", width = 800, height = 800)
 draw(htmp_bonus)
-#dev.off()
+dev.off()
 
 ##Part two of Project: Tidy up data, and plot by percentage total earnings
 
@@ -156,17 +185,21 @@ rownames(bonus_percent) <- bonus_percent$indv1_contrib
 #Convert to matrix, remove first column
 bonus_percent_map <- t(as.matrix(select(bonus_percent, -indv1_contrib)))
 
+
 #Create heatmap
 htmp_bonus_percent <- Heatmap(bonus_percent_map,
                       cluster_columns=FALSE,
-                      column_title = "Marriage Tax Bonus: Joint Filing vs Single Filing",
+                      column_title = "Percentage of Indivdual 1's Contribution (%)",
+                      column_title_side = "bottom",
                       cluster_rows=FALSE,
                       name = "Tax Bonus Amount",
                       heatmap_legend_param = list(
                         legend_height = unit(4, "cm")
                         ),
-                      col= c("Red", "yellow", "greenyellow", "green", "cyan", "blue")
+                      col= (colorRamp2(c(0, 5000, 10000, 15000, 20000, 25000, 30000), brewer.pal(7,"YlGnBu")))
 )
-draw(htmp_bonus_percent)
 
+png(file="ContributionPlot.png", width = 800, height = 800)
+draw(htmp_bonus_percent, row_title ="Total Joint Income ($)", column_title ="Marriage Tax Bonus: Joint Filing vs Single Filing")
+dev.off()
 

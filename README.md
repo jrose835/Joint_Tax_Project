@@ -4,11 +4,11 @@
 
 I recently got married! I'm also trying to brush off some of my knowledge of the R programming language. Naturally the first thing I thought to do was try and visualize how my new marital status would affect my tax return! I know! It's true! Married life can be **SO** exciting!
 
-Anyways this project performs a simulation of two individuals in the USA pooling their annual earnings over a range of potential incomes and either filing their taxes separately or jointly. I created two small R scripts titled single_tax.R and joint_tax.R which takes the adjusted gross income as an argument and uses the current US tax brackets (found in US_taxbracket_2019.csv) to calculate federal income tax for either single or joint filings respectively.
+Anyways this project performs a simulation of two married individuals **without children** in the USA pooling their annual earnings over a range of potential incomes and either filing their taxes separately or jointly. I created two small R scripts titled single_tax.R and joint_tax.R which takes the gross income as an argument, as well as the deductions you are claiming, and then uses the current US tax brackets (found in US_taxbracket_2019.csv) to calculate federal income, social security, and medicare tax for either single or joint filings respectively.
 
 The Tax_data.R files are where I perform the simulation and visualize the results in heatmaps of pooled income on both total tax amounts paid and the bonus (or penalty) of filing jointly.
 
-This was just a fun first project to get me back into using R after a long while of dormancy, but happy to hear any suggestions for improvement!
+This was just a fun first individual project to get me into using R, but happy to hear any suggestions for improvement!
 
 ### Results
 
