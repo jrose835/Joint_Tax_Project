@@ -92,8 +92,8 @@ htmp_joint <- Heatmap(joint_tax_totals,
         )
 
 #Draw and save to png file
-png(file="Total_Tax_Owed.png", width = 900, height = 600)
-draw(htmp_single + htmp_joint, column_title = "Total Tax Owed")
+png(file="Total_Tax_Owed_2019.png", width = 900, height = 600)
+draw(htmp_single + htmp_joint, column_title = "2019 Total Tax Owed")
 dev.off()
 
 #Calculate 'marriage bonus/penalty' amounts & plot heatmap
@@ -101,7 +101,7 @@ bonus_penalty <- single_tax_totals - joint_tax_totals
 
 htmp_bonus <- Heatmap(bonus_penalty,
         cluster_columns=FALSE,
-        column_title = "Marriage Tax Bonus: Joint Filing vs Single Filing",
+        column_title = "2019 Marriage Tax Bonus: Joint Filing vs Single Filing",
         cluster_rows=FALSE,
         row_names_gp = gpar(col = 
                               c(
@@ -118,10 +118,10 @@ htmp_bonus <- Heatmap(bonus_penalty,
                                )
                             ),  
         name = "Bonus $",
-        col= (colorRamp2(c(0, median(bonus_penalty), max(bonus_penalty)), brewer.pal(3,"YlGnBu")))
+        col= (colorRamp2(c(-20000, 0, 20000), brewer.pal(3,"Spectral")))
         )
 
-png(file="htmp_bonus.png", width = 800, height = 800)
+png(file="htmp_bonus_2019.png", width = 800, height = 800)
 draw(htmp_bonus)
 dev.off()
 
@@ -196,10 +196,10 @@ htmp_bonus_percent <- Heatmap(bonus_percent_map,
                       heatmap_legend_param = list(
                         legend_height = unit(4, "cm")
                         ),
-                      col= (colorRamp2(c(0, 5000, 10000, 15000, 20000, 25000, 30000), brewer.pal(7,"YlGnBu")))
+                      col= (colorRamp2(c(-20000,0,20000), brewer.pal(3,"Set1")))
 )
 
-png(file="ContributionPlot.png", width = 800, height = 800)
-draw(htmp_bonus_percent, row_title ="Total Joint Income ($)", column_title ="Marriage Tax Bonus: Joint Filing vs Single Filing")
+png(file="ContributionPlot_2019.png", width = 800, height = 800)
+draw(htmp_bonus_percent, row_title ="Total Joint Income ($)", column_title ="2019 Marriage Tax Bonus: Joint Filing vs Single Filing")
 dev.off()
 
