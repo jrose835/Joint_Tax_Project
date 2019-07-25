@@ -38,7 +38,7 @@ Wow! There's a bit more red here! It would seem there **was** a bit of a penalty
 
 Here's another way of looking at the differences by plotting the simulation by total joint income and percent contribution of one of the two individual earners for both of the two years.
 
-| #####2017 | ##### 2019 |
+| #####2017 | #####2019 |
 | ![2017 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2017.png) | ![2019 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2019.png) |
 | ----- | ----- |
 
