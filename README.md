@@ -36,8 +36,9 @@ Let's compare the same heatmap using the 2017 tax brackets (before the tax cut a
 
 Wow! There's a bit more red here! It would seem there **was** a bit of a penalty for those married couples each making more than $175K respectively that filed taxes jointly.
 
-Here's another way of looking at the differences by plotting the simulation by total joint income and percent contribution of one of the two individual earners.
+Here's another way of looking at the differences by plotting the simulation by total joint income and percent contribution of one of the two individual earners for both of the two years.
 
+| #####2017 | ##### 2019 |
 | ![2017 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2017.png) | ![2019 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2019.png) |
 | ----- | ----- |
 
