@@ -1,5 +1,5 @@
 #Uses a file containing US tax brackets to calculate the federal income and FICA tax for a single married individual filing taxes separately
-#Annual gross income (gi) is given as the first argument.
+#Annual gross income (gi) for ONE INDIVIDUAL is given as the first argument. 
 #By default the standard deduction for 1 individual in 2019 ($12,200) is set as the deduction in the second argument, but can be changed. 
 
 

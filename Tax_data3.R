@@ -168,10 +168,11 @@ for (i in seq_along(bonus_penalty2)) {
 primary <- as.numeric(primary)
 second <- as.numeric(second)
 
-#Create dataframe, filter for one-sided (contribution <= 50%), arrange by percent contribution
+#Create and save dataframe, filter for one-sided (contribution <= 50%), arrange by percent contribution
 income_data <- data.frame(primary,second,total_income,indv1_contrib, bonus) %>% 
   filter(indv1_contrib <= 0.5) %>%
   arrange(desc(total_income))
+write.csv(income_data, "tax_data_2019.csv")
 
 #Rounding off contribution percentage
 income_data$indv1_contrib <- round((income_data$indv1_contrib*100), digits=0)
