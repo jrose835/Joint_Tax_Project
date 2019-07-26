@@ -43,13 +43,14 @@ Wow! There's a bit more red here! It would seem there **was** a bit of a penalty
 | ----- | ----- |
 | ![2017 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2017.png) | ![2019 Contribution Plot](https://raw.githubusercontent.com/jrose835/Joint_Tax_Project/master/ContributionPlot_2019.png) |
 
-That's all for now, but I may come back and add things every now and then.
+That's all for now. I may come back and add things every now and then, but until then happy tax filings!
 
 ### Description of Files
 * US_taxbracket_2019.csv -- A simple table with the 2019 US tax brackets
 * single_tax.R -- R script for calculing single tax filing giving adjusted gross income (uses 2019 tax bracket)
 * joint_tax.R -- Same as single but for joint filing (uses 2019 tax bracket)
 * Tax_data3.R -- current version of simulation and visualization code
+* File versions ending in "2017" -- Clones of the original scripts but edited slightly for 2017
 
 ### Inspiration/Reference:
 * <https://taxfoundation.org/understanding-marriage-penalty-and-marriage-bonus/>
